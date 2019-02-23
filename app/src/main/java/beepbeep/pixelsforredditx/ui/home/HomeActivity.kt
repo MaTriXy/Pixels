@@ -3,8 +3,10 @@ package beepbeep.pixelsforredditx.ui.home
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
+import beepbeep.pixelsforredditx.R
 
 import beepbeep.pixelsforredditx.about.AboutActivity
 import beepbeep.pixelsforredditx.common.SnackbarOnlyOne
@@ -94,7 +96,7 @@ class HomeActivity : DaggerAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         setupTheme()
         super.onCreate(savedInstanceState)
-        setContentView(beepbeep.pixelsforredditx.R.layout.navigational_parent)
+        setContentView(R.layout.navigational_parent)
 
         navDrawerView = NavigationDrawerView(homeDrawerLayout)
         val viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java) //getViewModel<HomeViewModel>().also { lifecycle.addObserver(it) }

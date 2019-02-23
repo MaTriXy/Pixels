@@ -4,8 +4,9 @@ import com.worker8.redditapi.RedditApi
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class CommentRepo {
+class CommentRepo @Inject constructor() {
     private val redditApi = RedditApi()
     fun getComments(commentId: String) = redditApi.getComment(commentId)
     fun getMainThread(): Scheduler = AndroidSchedulers.mainThread()

@@ -6,8 +6,10 @@ import com.worker8.redditapi.RedditApi
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class HomeRepo(val context: Context) {
+
+class HomeRepo @Inject constructor(val context: Context) {
     var redditApi: RedditApi
 
     init {

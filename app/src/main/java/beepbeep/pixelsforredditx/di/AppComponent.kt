@@ -1,6 +1,5 @@
 package beepbeep.pixelsforredditx.di
 
-import android.app.Application
 import beepbeep.pixelsforredditx.PixelApplication
 import dagger.BindsInstance
 import dagger.Component
