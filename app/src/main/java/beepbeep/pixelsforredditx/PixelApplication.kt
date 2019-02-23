@@ -7,10 +7,10 @@ class PixelApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        _applicationContext = this
+        appContext = this
     }
 
     companion object {
-        private var _applicationContext: Context? = null
+        private var appContext: Context? = null
     }
 }

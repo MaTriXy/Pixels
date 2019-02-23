@@ -9,7 +9,7 @@ abstract class HeaderFooterPagedListAdapter<T>(diffCallback: DiffUtil.ItemCallba
     open var hasHeader: Boolean = false
     open var hasFooter: Boolean = false
 
-    fun HeaderFooterAdapter(hasHeader: Boolean, hasFooter: Boolean) {
+    fun headerFooterAdapter(hasHeader: Boolean, hasFooter: Boolean) {
         this.hasHeader = hasHeader
         this.hasFooter = hasFooter
     }
@@ -82,12 +82,11 @@ abstract class HeaderFooterPagedListAdapter<T>(diffCallback: DiffUtil.ItemCallba
 
         if (hasHeader && hasFooter) {
 
-            if (position == 0) {
-                onBindHeaderViewHolder(holder)
-            } else if (position == itemCount - 1) { // footer
-                onBindFooterViewHolder(holder)
-            } else {
-                onBindRealViewHolder(holder, position - 1)
+            when (position) {
+                0 -> onBindHeaderViewHolder(holder)
+                itemCount - 1 -> // footer
+                    onBindFooterViewHolder(holder)
+                else -> onBindRealViewHolder(holder, position - 1)
             }
         } else if (hasHeader && !hasFooter) {
             if (position == 0) {
@@ -111,20 +110,19 @@ abstract class HeaderFooterPagedListAdapter<T>(diffCallback: DiffUtil.ItemCallba
      */
     private object ViewType {
 
-        val HEADER = 999991
-        val FOOTER = 999992
+        const val HEADER = 999991
+        const val FOOTER = 999992
     }
 
     abstract fun getRealItemViewType(position: Int): Int
 
     override fun getItemViewType(position: Int): Int {
         return if (hasHeader && hasFooter) {
-            if (position == 0) {
-                ViewType.HEADER
-            } else if (position == itemCount - 1) { // footer
-                ViewType.FOOTER
-            } else {
-                getRealItemViewType(position - 1) // shift by header
+            when (position) {
+                0 -> ViewType.HEADER
+                itemCount - 1 -> // footer
+                    ViewType.FOOTER
+                else -> getRealItemViewType(position - 1) // shift by header
             }
 
         } else if (hasHeader && !hasFooter) {

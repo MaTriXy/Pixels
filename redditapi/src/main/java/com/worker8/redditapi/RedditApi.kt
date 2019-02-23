@@ -9,7 +9,7 @@ import com.worker8.redditapi.model.t1_comment.data.RedditReplyListingData
 import com.worker8.redditapi.model.t1_comment.deserializer.RedditCommentDeserializer
 import com.worker8.redditapi.model.t1_comment.deserializer.RedditCommentListingObjectDeserializer
 import com.worker8.redditapi.model.t1_comment.deserializer.RedditReplyListingDataDeserializer
-import com.worker8.redditapi.model.t1_comment.deserializer.T1_RedditObjectDeserializer
+import com.worker8.redditapi.model.t1_comment.deserializer.T1RedditObjectDeserializer
 import com.worker8.redditapi.model.t1_comment.response.RedditCommentListingObject
 import com.worker8.redditapi.model.t1_comment.response.RedditReplyDynamicObject
 import com.worker8.redditapi.model.t3_link.data.RedditLinkListingData
@@ -18,8 +18,8 @@ import io.reactivex.Observable
 
 class RedditApi(val subreddit: String = defaultSelectedSubreddit) {
 
-    val REDDIT_API_BASE = "https://www.reddit.com/"
-    var after = ""
+    private var after = ""
+
     fun getMorePosts(): Observable<Result<RedditLinkListingObject, FuelError>> =
         "${REDDIT_API_BASE}r/$subreddit.json?after=$after"
             .httpGet()
@@ -30,15 +30,18 @@ class RedditApi(val subreddit: String = defaultSelectedSubreddit) {
             }
 
     fun getComment(commentId: String): Observable<Result<Pair<RedditLinkListingData, RedditReplyListingData>, FuelError>> =
-        "${REDDIT_API_BASE}comments/${commentId}.json"
+        "${REDDIT_API_BASE}comments/$commentId.json"
             .httpGet()
             .rxObject(RedditCommentDeserializer())
             .toObservable()
 
     companion object {
+
+        private const val REDDIT_API_BASE = "https://www.reddit.com/"
+
         val gson = GsonBuilder()
             .registerTypeAdapter(RedditCommentListingObject::class.java, RedditCommentListingObjectDeserializer())
-            .registerTypeAdapter(RedditReplyDynamicObject.T1_RedditObject::class.java, T1_RedditObjectDeserializer())
+            .registerTypeAdapter(RedditReplyDynamicObject.T1RedditObject::class.java, T1RedditObjectDeserializer())
             .registerTypeAdapter(RedditReplyListingData::class.java, RedditReplyListingDataDeserializer())
             .create()
 

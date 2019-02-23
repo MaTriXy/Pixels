@@ -10,7 +10,11 @@ import beepbeep.pixelsforredditx.extension.toRelativeTimeString
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.worker8.redditapi.model.t3_link.response.RedditLinkObject
-import kotlinx.android.synthetic.main.home_item.view.*
+import kotlinx.android.synthetic.main.home_item.view.homeItemDateTime
+import kotlinx.android.synthetic.main.home_item.view.homeItemImage
+import kotlinx.android.synthetic.main.home_item.view.homeItemScore
+import kotlinx.android.synthetic.main.home_item.view.homeItemTitle
+import kotlinx.android.synthetic.main.home_item.view.homeItemUsername
 
 class HomeViewHolder(itemView: View, val callback: (commentId: String) -> Unit) : RecyclerView.ViewHolder(itemView) {
     fun bind(redditLink: RedditLinkObject) {
@@ -27,7 +31,7 @@ class HomeViewHolder(itemView: View, val callback: (commentId: String) -> Unit) 
             redditLink.value.apply {
                 homeItemTitle.text = title
                 homeItemUsername.text = author
-                homeItemScore.text = "${score} points · "
+                homeItemScore.text = "$score points · "
                 homeItemDateTime.text = created.toRelativeTimeString()
                 itemView.setOnClickListener { callback(id) }
             }
